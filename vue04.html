@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <first></first>
+    <hr>
+    <second></second>
+
+</div>
+<script src="js/vuex.3.0.1.js"></script>
+<script src="js/vue.min.js"></script>
+<script>
+    let first={
+        template:`
+        <div>这是一个组件
+        <button @click="pushData">按</button>
+
+</div>
+
+        `,
+        methods:{
+            pushData(){
+                this.$store.commit('add_data',100)
+            },
+        }
+    }
+
+    let second={
+        template:`
+        <div>
+        第二个 <span>nums和{{$store.getters.result}}</span>
+</div>`
+    }
+
+    let myStore=new Vues.Store({
+        state:{
+            nums:[45,10]
+        },
+        mutations:{
+            add_data(state,num){
+                state.num.push(num)
+            },
+        },
+        gatters:{
+            result:function (state) {
+                let res =0;
+                for (let n of state.nums){
+                    res +=n
+                }
+                return res
+
+            }
+        }
+    })
+
+    new Vue({
+        el:"#app",
+        data:{},
+        components:{
+            first:first,
+            second:second,
+        },
+        store:myStore,
+    })
+</script>
+</body>
+</html>
